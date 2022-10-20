@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SCI_LazuliKao_MAUI.MainPage"
+             xmlns:views="clr-namespace:SCI_LazuliKao_MAUI.Views" xmlns:models="clr-namespace:SCI_LazuliKao_MAUI.ViewModels">
+    <ContentPage.BindingContext>
+        <models:MainPageViewModel/>
+    </ContentPage.BindingContext>
+    <VerticalStackLayout Spacing="25" Padding="10,0">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Text="文件路径：" VerticalOptions="Center"/>
+            <Entry Text="{Binding FileLocation}" IsReadOnly="True" Grid.Column="1"/>
+        </Grid>
+        <Label Text="{Binding Tip}"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <views:AutoPartView BindingContext="{Binding CurrentItem}" />
+            <Button Grid.Column="1" Command="{Binding Add}" Text="入库" SemanticProperties.Hint="添加当前输入的信息到列表中" HorizontalOptions="Center"/>
+        </Grid>
+        <Rectangle  BackgroundColor="Gray"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <SearchBar BackgroundColor="DimGray" SearchCommand="{Binding Search}" Text="{Binding SearchText}" />
+            <Label Grid.Column="2" Text="编号" VerticalOptions="Center"/>
+            <CheckBox Grid.Column="3" IsChecked="{Binding SearchByCode}"/>
+            <Label Grid.Column="4" Text="名称" VerticalOptions="Center"/>
+            <CheckBox  Grid.Column="5" IsChecked="{Binding SearchByName}"/>
+        </Grid>
+        <HorizontalStackLayout>
+            <Label Text="已显示 "/>
+            <Label Text="{Binding DisplayItems.Count}"/>
+            <Label Text="/"/>
+            <Label Text="{Binding Items.Count}"/>
+        </HorizontalStackLayout>
+        <ScrollView VerticalScrollBarVisibility="Always">
+            <ListView ItemsSource="{Binding DisplayItems}" SelectionMode="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <views:AutoPartView BindingContext="{Binding Self}"/>
+                                <Button Grid.Column="1" Text="出库" HorizontalOptions="Center" Command="{Binding Remove}"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollView>
+    </VerticalStackLayout>
+</ContentPage>

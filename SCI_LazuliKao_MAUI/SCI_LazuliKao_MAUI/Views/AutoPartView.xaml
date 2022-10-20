@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        x:Class="SCI_LazuliKao_MAUI.Views.AutoPartView"
+        xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+        xmlns:models="clr-namespace:SCI_LazuliKao_MAUI.ViewModels">
+    <ContentView.BindingContext>
+        <models:AutoPartViewModel/>
+    </ContentView.BindingContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Entry Text="{Binding Code}" BackgroundColor="DimGray" HorizontalTextAlignment="Center" />
+            <Label Text="编号:" FontSize="12" Opacity=".5"/>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Entry Text="{Binding Name}" BackgroundColor="DimGray" HorizontalTextAlignment="Center"/>
+            <Label Text="名称:" FontSize="12" Opacity=".5"/>
+        </Grid>
+        <Grid Grid.Column="2">
+            <Entry Text="{Binding Type}" BackgroundColor="DimGray" HorizontalTextAlignment="Center"/>
+            <Label Text="类型:" FontSize="12" Opacity=".5"/>
+        </Grid>
+        <Grid Grid.Column="3">
+            <Entry Text="{Binding Count}" BackgroundColor="DimGray" HorizontalTextAlignment="Center"/>
+            <Label Text="数量:" FontSize="12" Opacity=".5"/>
+        </Grid>
+    </Grid>
+</ContentView>
