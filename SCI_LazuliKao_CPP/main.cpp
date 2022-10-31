@@ -18,7 +18,7 @@ int main() {
   std::cout << "逐个输入单件" << std::endl;
   std::vector<AutoPart> items = std::vector<AutoPart>();
   for (int i = 1; i <= count; i++) {
-    std::cout<<i << " / "<<count << std::endl;
+    std::cout << i << " / " << count << std::endl;
     std::string name, code, type;
     int count;
     std::cout << "输入名称：";
@@ -36,5 +36,24 @@ int main() {
   for (auto &part : items) {
     std::cout << part.name << "\t" << part.code << "\t" << part.type << "\t"
               << part.count << std::endl;
+  }
+  std::string queryCode;
+  while (true) {
+    std::cout << "输入编号以查询：";
+    std::cin >> queryCode;
+    std::cout << "名称\t编号\t类型\t数量" << std::endl;
+    int findCount = 0;
+    for (auto &part : items) {
+      if (part.code == queryCode) {
+        ++findCount;
+        std::cout << part.name << "\t" << part.code << "\t" << part.type << "\t"
+                  << part.count << std::endl;
+      }
+    }
+    if (findCount) {
+      std::cout << "累计查询到" << findCount << "项" << std::endl;
+    } else {
+      std::cout << "无" << std::endl;
+    }
   }
 }
