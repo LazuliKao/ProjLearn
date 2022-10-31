@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    tes
+    <!-- <div id="asjhda"></div>
+    <div class="asdsa"></div> -->
+    <input id="inname" type="text">
+    <span id="out"></span>
+    <button id="submit">提交</button>
+    <script>
+        window.document.getElementById("submit").addEventListener("click", ()=>{
+            let name = window.document.getElementById("inname").value
+            window.document.getElementById("out").textContent =  name
+            alert( name); 
+        });
+    </script>
+</body>
+
+</html>
