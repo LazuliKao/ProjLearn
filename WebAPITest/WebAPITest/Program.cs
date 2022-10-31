@@ -37,9 +37,17 @@ void InitAllApi()
     {
         return new
         {
-            a="a"
+            a = "233"
         };
     })
-    .WithName("add");
+    .WithTags("≤‚ ‘");
+    app.MapGet("/remove", () =>
+    {
+        return new
+        {
+            b = "233"
+        };
+    })
+    .WithTags("≤‚ ‘2");
 }
 //record AddResult(string? a  );
