@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import LoginBox from './components/LoginBox.vue'
-import TheWelcome from './components/TheWelcome.vue'
+//import TheWelcome from './components/TheWelcome.vue'
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+    <!-- <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" /> -->
     <div class="wrapper">
-      <LoginBox msg="测试" info=""/>
+      <LoginBox msg="" />
     </div>
   </header>
-  <main>
+  <!-- <main>
     <TheWelcome />
-  </main>
+  </main> -->
 </template>
 <style scoped>
 header {

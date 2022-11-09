@@ -4,18 +4,19 @@ defineProps<{
 }>();
 </script>
 <script lang="ts" >
-import axios from 'axios'
 export default {
     data() {
         return {
-            info: "test"
+            info: "test",
+            result: ""
         }
     },
     methods: {
         Submit: async function () {
-            alert(this.$data.info)
-            let result = await axios.get("baidu.com")
-            alert(result.data)
+            let info = this.$data.info;
+            let response = await this.axios.get("http://localhost:8080/add");
+            let str: string = response.data
+            this.$data.result = str;
         }
     }
 }
@@ -31,6 +32,9 @@ export default {
         <button v-on:click="Submit">
             提交
         </button>
+        <h4>
+            返回 {{ result }}
+        </h4>
     </div>
 </template>
 <style scoped>
@@ -39,11 +43,9 @@ h1 {
     font-size: 2.6rem;
     top: -10px;
 }
-
 h3 {
     font-size: 1.2rem;
 }
-
 .greetings h1,
 .greetings h3 {
     text-align: center;
