@@ -1,23 +1,23 @@
-<script lang="ts">
+<script setup lang="ts">
+defineProps<{
+    msg: string
+}>();
+</script>
+<script lang="ts" >
+import axios from 'axios'
 export default {
     data() {
         return {
-            result: "test"
+            info: "test"
+        }
+    },
+    methods: {
+        Submit: async function () {
+            alert(this.$data.info)
+            let result = await axios.get("baidu.com")
+            alert(result.data)
         }
     }
-}
-</script>
-<script setup lang="ts">
-import axios from 'axios'
-let data = defineProps<{
-    msg: string,
-    info: string
-}>();
-async function Submit() {
-    alert(data.info)
-    let result = await axios.get("baidu.com")
-    alert(result.data)
-    //http://localhost/add
 }
 </script>
 <template>
