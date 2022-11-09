@@ -20,8 +20,7 @@ builder.Services.AddCors(options =>
             "http://localhost:5173"//允许的请求来源
         }).AllowAnyHeader().AllowAnyMethod().AllowCredentials();
     }); 
-});
-
+}); 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
