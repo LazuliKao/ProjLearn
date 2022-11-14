@@ -19,8 +19,8 @@ builder.Services.AddCors(options =>
         {
             "http://localhost:5173"//允许的请求来源
         }).AllowAnyHeader().AllowAnyMethod().AllowCredentials();
-    }); 
-}); 
+    });
+});
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
@@ -36,7 +36,6 @@ var app = builder.Build();
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
         options.RoutePrefix = string.Empty;
     });
-    //
 }
 app.UseHttpsRedirection();
 InitAllApi();//初始化API
@@ -46,21 +45,19 @@ app.MapControllers();
 app.Run();
 void InitAllApi()
 {
-    app.MapGet("/add", () =>
+    Dictionary<string, LoginInfo> tokenMap = new();
+    app.MapPost("/login", (LoginRequest data) =>
     {
-        return new
+        if (true)
         {
-            a = "233"
-        };
+            string token = Guid.NewGuid().ToString();
+            var info = new LoginInfo(data.user);
+            tokenMap.Add(token, info);
+            return new LoginResponse(true, "登录成功", token);
+        }
     })
-    .WithTags("测试");
-    app.MapGet("/remove", () =>
-    {
-        return new
-        {
-            b = "233"
-        };
-    })
-    .WithTags("测试2");
+    .WithTags("登录"); 
 }
-//record AddResult(string? a  );
+record LoginInfo(string user);
+record LoginRequest(string user, string passwordMd5);
+record LoginResponse(bool success, string message, string token);

@@ -1,40 +1,40 @@
 <script setup lang="ts">
-import LoginBox from './components/LoginBox.vue'
-//import TheWelcome from './components/TheWelcome.vue'
+import LoginPage from './components/LoginPage.vue'
+import GoToLoginPage from './components/GoToLoginPage.vue'
+import Home from './components/HomePanel.vue'
+import NotFound from './NotFound.vue'
 </script>
-
+<script lang="ts">
+const routes = {
+  '/': Home,
+  '/login': LoginPage,
+  '/login/goto': GoToLoginPage
+}
+export default {
+  data() {
+    return {
+      currentPath: window.location.hash
+    }
+  },
+  computed: {
+    currentView() {
+      let target: any = this.currentPath.slice(1) || '/';
+      console.log("current : "+target);
+      return routes[target as keyof typeof routes] || NotFound;
+    }
+  },
+  mounted() {
+    window.addEventListener('hashchange', () => {
+      this.currentPath = window.location.hash
+    })
+  }
+}
+</script>
 <template>
-  <header>
-    <!-- <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" /> -->
-    <div class="wrapper">
-      <LoginBox msg="" />
-    </div>
-  </header>
-  <!-- <main>
-    <TheWelcome />
-  </main> -->
+  <a href="#/">主页</a> |
+  <a href="#/login">登录</a> |
+  <a href="#/non-existent-path">404测试</a>
+  <component :is="currentView" />
 </template>
 <style scoped>
-header {
-  line-height: 1.5;
-}
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
 </style>
