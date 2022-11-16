@@ -4,6 +4,7 @@ export default {
     data() {
         return {
             user: "admin",
+            password: "admin",
             result: "",
             success: false
         }
@@ -11,10 +12,9 @@ export default {
     methods: {
         Submit: async function () {
             try {
-                let user = this.$data.user;
                 let response = await this.axios.post('http://localhost:8080/login', {
-                    user: user,
-                    passwordMd5: ''
+                    user: this.user,
+                    passwordMd5: this.password
                 });
                 const {
                     success,
@@ -33,11 +33,11 @@ export default {
                         SetToken(token)
                     }, 1000);
                 } else {
-                    this.$data.result = "登录失败！\n信息：" + message;
+                    this.result = "登录失败！\n信息：" + message;
                 }
             } catch (error) {
                 let err = (error as Error);
-                this.$data.result = err.name + " : " + err.message;
+                this.result = err.name + " : " + err.message;
             }
         }
     }
@@ -45,9 +45,10 @@ export default {
 </script>
 <template>
     <div class="greetings">
-        <h1 class="green">输入信息以登录</h1>
-        信息：
-        <input v-model="user">
+        帐号：<input v-model="user">
+        <br>
+        密码：<input type="password" v-model="password">
+        <br>
         <button v-on:click="Submit">
             登录
         </button>

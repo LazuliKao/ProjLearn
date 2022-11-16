@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import LoginPage from './components/LoginPage.vue'
-import GoToLoginPage from './components/GoToLoginPage.vue'
-import Home from './components/HomePanel.vue'
+import LoginPage from './pages/LoginPage.vue'
+import GoToLoginPage from './pages/GoToLoginPage.vue'
+import Home from './pages/HomePanel.vue'
 import NotFound from './NotFound.vue'
 </script>
 <script lang="ts">
@@ -31,9 +31,12 @@ export default {
 }
 </script>
 <template>
-  <a href="#/">主页</a> |
-  <a href="#/login">登录</a> |
-  <a href="#/non-existent-path">404测试</a>
+  <div>
+    <a href="#/">主页</a> |
+    <a href="#/login">登录</a> |
+    <a href="#/non-existent-path">404测试</a>
+  </div>
+  <br>
   <component :is="currentView" />
 </template>
 <style scoped>

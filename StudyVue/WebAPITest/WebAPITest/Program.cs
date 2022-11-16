@@ -53,11 +53,33 @@ void InitAllApi()
             string token = Guid.NewGuid().ToString();
             var info = new LoginInfo(data.user);
             tokenMap.Add(token, info);
+            Console.WriteLine("新的会话：" + token);
             return new LoginResponse(true, "登录成功", token);
         }
+    });
+    app.MapPost("/getallitems", (GetAllItemsRequest data) =>
+    {
+        if (tokenMap.ContainsKey(data.token))
+        {
+            string token = Guid.NewGuid().ToString();
+            var info = new LoginInfo(data.user);
+            tokenMap.Add(token, info);
+            Console.WriteLine("新的会话：" + token);
+            return new LoginResponse(true, "登录成功", token);
+        }
+        else
+        {
+            return new { }
+        }
     })
-    .WithTags("登录"); 
+    .WithTags("登录");
 }
 record LoginInfo(string user);
-record LoginRequest(string user, string passwordMd5);
+record LoginRequest(string user, string password, string passwordMd5);
 record LoginResponse(bool success, string message, string token);
+
+record BaseResponse<T>(bool success, string msg, T data);
+
+record GetAllItemsRequest(string token);
+record GetAllItemsResponse() : BaseResponse<List<GetAllItemsResponseItem>>(bool success, string msg);
+record GetAllItemsResponseItem();

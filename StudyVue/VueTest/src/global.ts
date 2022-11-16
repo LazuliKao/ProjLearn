@@ -1,6 +1,6 @@
 let token: string | undefined = undefined
-export function GetToken() {
-    return token
+export function GetToken(): string {
+    return token as string
 }
 export function TryGetToken(): { success: false } | { success: boolean, token: string } {
     if (token === undefined) {
