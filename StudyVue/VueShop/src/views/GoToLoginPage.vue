@@ -38,7 +38,7 @@ export default {
         <h4>
             尚未登录！
             将在 {{ time }} 秒后跳转到
-            <a href="#/login" :on-click="ClearTimeouts">登录界面</a>
+            <RouterLink to="/login">登录界面</RouterLink>
         </h4>
     </div>
 </template>

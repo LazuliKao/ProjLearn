@@ -21,9 +21,9 @@ const router = createRouter({
       component: () => import('../views/GoToLoginPage.vue')
     },
     {
-      path: '/shop/all',
-      name: 'shopall',
-      component: () => import('../views/ShopItemList.vue')
+      path: '/shop/center',
+      name: 'shopcenter',
+      component: () => import('../views/ShopCenter.vue')
     }
   ]
 })

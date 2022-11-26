@@ -3,6 +3,7 @@ using Microsoft.Net.Http.Headers;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using System.Xml.Linq;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -57,29 +58,47 @@ void InitAllApi()
             return new LoginResponse(true, "登录成功", token);
         }
     });
-    //app.MapPost("/getallitems", (GetAllItemsRequest data) =>
-    //{
-    //    if (tokenMap.ContainsKey(data.token))
-    //    {
-    //        string token = Guid.NewGuid().ToString();
-    //        var info = new LoginInfo(data.user);
-    //        tokenMap.Add(token, info);
-    //        Console.WriteLine("新的会话：" + token);
-    //        return new LoginResponse(true, "登录成功", token);
-    //    }
-    //    else
-    //    {
-    //        return new { }
-    //    }
-    //})
-    //.WithTags("登录");
+    app.MapPost("/getallitems", (GetAllItemsRequest data) =>
+    {
+        if (data is not null and { token: not null } && tokenMap.ContainsKey(data.token))
+        {
+            Console.WriteLine("call getallitems");
+            return new GetAllItemsResponse()
+            {
+                new GetAllItemsResponseItem("001","测试商品1",1,"描述1"),
+                new GetAllItemsResponseItem("002","测试商品2",2,"描述2"),
+                new GetAllItemsResponseItem("003","测试商品3",10,"test3"+DateTime.Now.ToString("G"))
+            };
+        }
+        else
+        {
+            return null;
+        }
+    })
+    .WithTags("");
+    app.MapPost("/getcartitems", (GetAllItemsRequest data) =>
+    {
+        if (data is not null and { token: not null } && tokenMap.ContainsKey(data.token))
+        {
+            Console.WriteLine("call getcartitems");
+            return new GetAllItemsResponse()
+            {
+                new GetAllItemsResponseItem("002","测试商品2",2,"描述2"),
+            };
+        }
+        else
+        {
+            return null;
+        }
+    })
+    .WithTags("");
 }
 record LoginInfo(string user);
 record LoginRequest(string user, string password, string passwordMd5);
 record LoginResponse(bool success, string message, string token);
 
-record BaseResponse<T>(bool success, string msg, T data);
+//record BaseResponse<T>(bool success, string msg, T data);
 
 record GetAllItemsRequest(string token);
-//record GetAllItemsResponse() : BaseResponse<List<GetAllItemsResponseItem>>(bool success, string msg);
-record GetAllItemsResponseItem();
+class GetAllItemsResponse : List<GetAllItemsResponseItem> { };//BaseResponse<List<GetAllItemsResponseItem>>(bool success, string msg);
+record GetAllItemsResponseItem(string id, string name,int price, string description, int number = 0);
