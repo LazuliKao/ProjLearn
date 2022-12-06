@@ -44,6 +44,8 @@ app.UseCors("CorsPolicy");
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
+
+[global::System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Calls Microsoft.AspNetCore.Builder.EndpointRouteBuilderExtensions.MapPost(String, Delegate)")]
 void InitAllApi()
 {
     Dictionary<string, LoginInfo> tokenMap = new();
