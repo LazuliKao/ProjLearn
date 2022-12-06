@@ -7,7 +7,11 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    ElButton: typeof import('element-plus/es')['ElButton']
+    ElInputNumber: typeof import('element-plus/es')['ElInputNumber']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ShopItem: typeof import('./src/components/ShopItem.vue')['default']
+    ShopItemView: typeof import('./src/components/ShopItemView.vue')['default']
   }
 }

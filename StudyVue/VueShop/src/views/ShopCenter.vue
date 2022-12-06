@@ -1,11 +1,14 @@
-<script lang="ts" >
-class ShopItem {
-    id: string = ""
-    name: string = ""
-    price: number = 0
-    description: string = ""
-    count: number = 1
-}
+
+
+<script lang="ts" setup>
+import { ElMessage } from 'element-plus'
+import "../components/ShopItemView.vue"
+const OnError = (text: string) => {
+    ElMessage.error(text)
+} 
+</script>
+<script lang="ts">
+import type { ShopItem } from "../models/shop";
 import { TryGetToken, GetToken } from "../global";
 export default {
     data(): {
@@ -33,6 +36,18 @@ export default {
             })
             this.cartitems = items.data
             this.loaded = true;
+        },
+        AddToCart: async function (item: ShopItem) {
+            let r = await this.axios.post('addtocart', {
+                token: GetToken(),
+                id: item.id,
+                count: item.count
+            })
+            if (r.data.success) {
+                this.RefreshCartItems()
+            } else {
+                OnError(r.data.message)
+            }
         }
     },
     mounted() {
@@ -65,23 +80,14 @@ export default {
                     <td> {{ item.name }} </td>
                     <td> {{ item.description }} </td>
                     <td>
-                        <button @click="item.count = (item.count ?? 0) + 1">
-                            +
-                        </button>
-                        <input class="numtb" v-model="item.count">
-                        <button v-bind:disabled="item.count <= 1" @click="item.count = (item.count ?? 2) - 1">
-                            -
-                        </button>
-                        <button class="btadd">
-                            移除
-                        </button>
-                    </td>-
+                        <shop-item-view :item="item" />
+                    </td>
                 </tr>
             </table>
             <div v-else>
                 正在获取购物车商品
             </div>
-            <button @click="RefreshCartItems">刷新购物车</button>
+            <el-button @click="RefreshCartItems">刷新购物车</el-button>
         </div>
         <!-- 分割线 -->
         <div style="border:1px solid ;float:left;height:200px;"></div>
@@ -106,23 +112,17 @@ export default {
                         {{ item.description }}
                     </td>
                     <td>
-                        <button @click="item.count = (item.count ?? 0) + 1">
-                            +
-                        </button>
-                        <input class="numtb" v-model="item.count">
-                        <button v-bind:disabled="item.count <= 1" @click="item.count = (item.count ?? 2) - 1">
-                            -
-                        </button>
-                        <button class="btadd">
-                            添加
-                        </button>
+                        <shop-item-view :item="item" />
                     </td>
+                    <td>
+                        <el-button @click="AddToCart(item)">加入购物车</el-button>
+                    </td>   
                 </tr>
             </table>
             <div v-else>
                 正在获取商品列表
             </div>
-            <button @click="RefreshAllItems">刷新列表</button>
+            <el-button @click="RefreshAllItems">刷新列表</el-button>
         </div>
     </div>
 </template> 
@@ -145,4 +145,4 @@ export default {
     left: 50%;
     top: 20px;
 }
-</style>
+</style> 

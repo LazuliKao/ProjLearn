@@ -44,20 +44,32 @@ export default {
 }
 </script>
 <template>
-    <div class="greetings">
+    <div class="main">
         帐号：<input v-model="user">
         <br>
         密码：<input type="password" v-model="password">
         <br>
-        <button v-on:click="Submit">
-            登录
-        </button>
         <h4>
             {{ result }}
             <a v-if="success" href="#/">主页</a>
         </h4>
+        <el-button v-on:click="Submit" class="loginbutton">
+            登录
+        </el-button>
     </div>
 </template>
 <style scoped>
+div.main {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 70px;
+}
+
+.loginbutton {
+    position: absolute;
+    margin-top: 10px;
+}
 
 </style>
