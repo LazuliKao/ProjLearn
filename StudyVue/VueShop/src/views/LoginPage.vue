@@ -45,9 +45,9 @@ export default {
 </script>
 <template>
     <div class="main">
-        帐号：<input v-model="user">
+        帐号：<el-input v-model="user" placeholder="输入帐号" clearable />
         <br>
-        密码：<input type="password" v-model="password">
+        密码：<el-input type="password" placeholder="输入密码" v-model="password" show-password clearable />
         <br>
         <h4>
             {{ result }}
@@ -61,15 +61,14 @@ export default {
 <style scoped>
 div.main {
     position: absolute;
-    top: 50%;
+    top: 20%;
     left: 50%;
+    width:300px;
     transform: translate(-50%, -50%);
-    margin: 70px;
 }
 
 .loginbutton {
     position: absolute;
     margin-top: 10px;
 }
-
 </style>

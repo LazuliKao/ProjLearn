@@ -18,28 +18,22 @@ import { RouterLink, RouterView } from 'vue-router'
 </template>
 
 <style scoped>
-div.view {
-  /** show on bottom as dock*/
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 14%;
-}
 
 div.header {
-  margin-top: 10px;
-  align-items: center;
-  vertical-align: top;
-  justify-content: center;
+  background-color: var(--color-header);
+  padding: 1rem;
+}
+div.view {  
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  width: 80vw;
 }
 div.main{
+  flex: 1;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  min-width: 100vh;
-  background-color: var(--color-background);
 }
 
 nav {
@@ -63,15 +57,4 @@ nav a {
   padding: 0 1rem;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-  }
-
-  nav {
-    text-align: left;
-    justify-self: center;
-  }
-}
 </style>

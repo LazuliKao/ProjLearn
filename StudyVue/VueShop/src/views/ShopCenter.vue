@@ -64,67 +64,67 @@ export default {
 }
 </script>
 <template>
-    <div>
-        <!--左侧-->
-        <div class="left">
-            购物车：
-            <table v-if="loaded">
-                <tr>
-                    <th> 编号 </th>
-                    <th> 商品名称 </th>
-                    <th> 描述 </th>
-                    <th> 操作 </th>
-                </tr>
-                <tr v-for="item in cartitems">
-                    <td> {{ item.id }} </td>
-                    <td> {{ item.name }} </td>
-                    <td> {{ item.description }} </td>
-                    <td>
-                        <shop-item-view :item="item" />
-                    </td>
-                </tr>
-            </table>
-            <div v-else>
-                正在获取购物车商品
+    <el-tabs>
+        <el-tab-pane label="全部商品">
+            <div>
+                全部商品列表
+                <table v-if="loaded">
+                    <tr>
+                        <th> 编号 </th>
+                        <th> 商品名称 </th>
+                        <th> 描述 </th>
+                        <th> 操作 </th>
+                    </tr>
+                    <tr v-for="item in allitems">
+                        <td>
+                            {{ item.id }}
+                        </td>
+                        <td>
+                            {{ item.name }}
+                        </td>
+                        <td>
+                            {{ item.description }}
+                        </td>
+                        <td>
+                            <shop-item-view :item="item" />
+                        </td>
+                        <td>
+                            <el-button @click="AddToCart(item)">加入购物车</el-button>
+                        </td>
+                    </tr>
+                </table>
+                <div v-else>
+                    正在获取商品列表
+                </div>
+                <el-button @click="RefreshAllItems">刷新列表</el-button>
             </div>
-            <el-button @click="RefreshCartItems">刷新购物车</el-button>
-        </div>
-        <!-- 分割线 -->
-        <div style="border:1px solid ;float:left;height:200px;"></div>
-        <!--右侧-->
-        <div class="right">
-            全部商品列表
-            <table v-if="loaded">
-                <tr>
-                    <th> 编号 </th>
-                    <th> 商品名称 </th>
-                    <th> 描述 </th>
-                    <th> 操作 </th>
-                </tr>
-                <tr v-for="item in allitems">
-                    <td>
-                        {{ item.id }}
-                    </td>
-                    <td>
-                        {{ item.name }}
-                    </td>
-                    <td>
-                        {{ item.description }}
-                    </td>
-                    <td>
-                        <shop-item-view :item="item" />
-                    </td>
-                    <td>
-                        <el-button @click="AddToCart(item)">加入购物车</el-button>
-                    </td>   
-                </tr>
-            </table>
-            <div v-else>
-                正在获取商品列表
+        </el-tab-pane>
+        <el-tab-pane label="购物车">
+            <div>
+                购物车：
+                <table v-if="loaded">
+                    <tr>
+                        <th> 编号 </th>
+                        <th> 商品名称 </th>
+                        <th> 描述 </th>
+                        <th> 操作 </th>
+                    </tr>
+                    <tr v-for="item in cartitems">
+                        <td> {{ item.id }} </td>
+                        <td> {{ item.name }} </td>
+                        <td> {{ item.description }} </td>
+                        <td>
+                            <shop-item-view :item="item" />
+                        </td>
+                    </tr>
+                </table>
+                <div v-else>
+                    正在获取购物车商品
+                </div>
+                <el-button @click="RefreshCartItems">刷新购物车</el-button>
             </div>
-            <el-button @click="RefreshAllItems">刷新列表</el-button>
-        </div>
-    </div>
+        </el-tab-pane>
+    </el-tabs>
 </template> 
 <style>
 .btadd {
@@ -133,16 +133,5 @@ export default {
 
 .numtb {
     width: 30px
-}
-
-.left {
-    width: 50%;
-    top: 20px;
-}
-
-.right {
-    position: absolute;
-    left: 50%;
-    top: 20px;
 }
 </style> 
