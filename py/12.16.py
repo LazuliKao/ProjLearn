@@ -18,7 +18,7 @@ class MainWindow(Tk):
         self.resizable(0, 0)
         self.config(bg='white')
         self.setup_UI()
-        self.loac_from_file()
+        self.load_from_file()
         self.load_treeview(self.all_student_list)
         self.bind_event()
 
@@ -27,10 +27,20 @@ class MainWindow(Tk):
         # 创建两个Panedwindow容器，左边添加按钮，右边作为TreeView显示界面
         self.Pane_left = PanedWindow(
             width=200, height=540, style="left.TPanedwindow")
-        self.Pane_left.place(x=4, y=94)
+        self.Pane_left.place(x=4, y=80)
         self.Pane_right = PanedWindow(
             width=685, height=540, style="right.TPanedwindow")
-        self.Pane_right.place(x=210, y=94)
+        self.Pane_right.place(x=210, y=80)
+        self.Pane_Top = PanedWindow(
+            width=800, height=80, style="top.TPanedwindow")
+        self.Pane_Top.place(x=0, y=0)
+        # 添加Label
+        #title.png
+        self.titleImg = PhotoImage(file='title.png')
+        self.title = Label(self.Pane_Top, image=self.titleImg)
+        self.title.place(x=0, y=0)
+
+        
         # 添加左边按钮
         self.Button_add = Button(self.Pane_left, text='添加信息')
         self.Button_add.place(x=40, y=20)
@@ -46,33 +56,39 @@ class MainWindow(Tk):
             self.Pane_right, text="学生信息查询	", width=700, height=70)
         # 添加其余Button
         self.Button_query = Button(self.Pane_right, text='查询')
-        self.Button_query.place(x=400, y=20)
+        self.Button_query.place(x=430, y=20)
         self.Show_all = Button(self.Pane_right, text='显示全部')
-        self.Show_all.place(x=500, y=20)
+        self.Show_all.place(x=520, y=20)
         # 添加Label
-        self.Label_query = Label(self.Pane_right, text='学号/姓名')
+        self.Label_query = Label(self.Pane_right, text='学号/姓名/电话/身份证')
         self.Label_query.place(x=10, y=20)
         # 添加Entry
-        self.Entry_query = Entry(self.Pane_right, width=20)
-        self.Entry_query.place(x=80, y=20)
+        self.Entry_query = Entry(self.Pane_right, width=40)
+        self.Entry_query.place(x=150, y=20)
         # 添加TreeView
         self.Tree = Treeview(self.Pane_right, columns=(
-            "sno", "names", "phone", "idcard"), show="headings", height=20)
+            "sno", "names", "sex", "phone", "idcard", "zipcode", "address"), show="headings", height=20)
         # 设置每一个列的宽度和对齐的方式
         self.Tree.column("sno", width=100, anchor="center")
         self.Tree.column("names", width=100, anchor="center")
+        self.Tree.column("sex", width=30, anchor="center")
         self.Tree.column("phone", width=100, anchor="center")
         self.Tree.column("idcard", width=100, anchor="center")
+        self.Tree.column("zipcode", width=100, anchor="center")
+        self.Tree.column("address", width=100, anchor="center")
         # 设置每个列的标题
         self.Tree.heading("sno", text="学号")
         self.Tree.heading("names", text="姓名")
+        self.Tree.heading("sex", text="性别")
         self.Tree.heading("phone", text="电话")
         self.Tree.heading("idcard", text="身份证号")
+        self.Tree.heading("zipcode", text="邮编")
+        self.Tree.heading("address", text="地址")
         self.Tree.place(x=10, y=80)
 
-    def loac_from_file(self):
+    def load_from_file(self):
         self.all_student_list = []
-        self.file_path = "C:/Users/gaoxi/Desktop/stu.txt"
+        self.file_path = "stu.txt"
         if os.path.exists(self.file_path):
             try:
                 with open(self.file_path, "r", encoding="utf-8") as f:
@@ -95,14 +111,60 @@ class MainWindow(Tk):
                                                     current_list[index][2], current_list[index][3]))
 
     def bind_event(self):
-        pass
-
-
+        # 绑定事件
+        self.Button_add.bind("<Button-1>", self.add_student)
         # self.Button_add.bind("<Button-1>", self.add_student)
         # self.Button_update.bind("<Button-1>", self.update_student)
         # self.Button_delete.bind("<Button-1>", self.delete_student)
         # self.Button_query.bind("<Button-1>", self.query_student)
         # self.Show_all.bind("<Button-1>", self.show_all_student)
+
+    def add_student(self,e):
+    # 学号:
+        # 姓名：
+        # 性别：O男O女
+        # 出生日期：
+        # 身份证号码:
+        # 手机号码:
+        # 邮箱地址:
+        # 家庭住址:
+        # 入学时间:
+        # 专业:
+        # 紧急联系人:
+        # 紧急联系人电话:
+
+        
+        
+    def add_ok(self, event):
+        # 获取输入的数据
+        self.sno = self.Entry_add_sno.get()
+        self.names = self.Entry_add_names.get()
+        # 判断是否为空
+        if self.sno == "" or self.names == "":
+            messagebox.showinfo("系统消息", "学号或姓名不能为空")
+        else:
+            # 判断是否已经存在
+            if self.is_exist(self.sno):
+                messagebox.showinfo("系统消息", "学号已经存在")
+            else:
+                # 添加数据
+                self.all_student_list.append([self.sno, self.names])
+                # 保存数据
+                self.save_to_file()
+                # 刷新数据
+                self.refresh_treeview()
+                # 关闭窗口
+                self.add_window.destroy()
+                
+    def add_cancel(self, event):
+        self.add_window.destroy()
+
+    def is_exist(self, sno):
+        for item in self.all_student_list:
+            if item[0] == sno:
+                return True
+        return False
+
 if __name__ == '__main__':
     this_main = MainWindow()  # 调用窗口类
     this_main.mainloop()
